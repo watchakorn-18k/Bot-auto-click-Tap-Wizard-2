@@ -21,11 +21,11 @@ def checkResearch():
     while keyboard.is_pressed('-') == False:
         a = GetpositionMouse()
         b = a
-        if pyautogui.pixelMatchesColor(x=2157,y=786,expectedRGBColor=(33,138,19)) or pyautogui.pixelMatchesColor(x=2157,y=786,expectedRGBColor=(35,127,133)):
-            pyautogui.click(x=2190,y=761)
-            time.sleep(0.5)
-            count = 0
-            try:
+        try:
+            if pyautogui.pixelMatchesColor(x=2157,y=786,expectedRGBColor=(33,138,19)) or pyautogui.pixelMatchesColor(x=2157,y=786,expectedRGBColor=(35,127,133)):
+                pyautogui.click(x=2190,y=761)
+                time.sleep(0.5)
+                count = 0
                 for i in range(5):
                     while True:
                         if pyautogui.pixelMatchesColor(x=2156+count,y=266,expectedRGBColor=(29,39,99)) or pyautogui.pixelMatchesColor(x=2156+count,y=266,expectedRGBColor=(33,138,19)):
@@ -41,11 +41,11 @@ def checkResearch():
                                     pyautogui.click(2305,429)
                         count += 59
                 pyautogui.click(2491,111)
-            except:
-                pass
-            pyautogui.click(2491,111)
-            pyautogui.moveTo(b)
-            # time.sleep(60*10)
+        except:
+            pass
+        pyautogui.click(2491,111)
+        pyautogui.moveTo(b)
+        # time.sleep(60*10)
 
 
 def Check_Pos_Color():
@@ -74,6 +74,7 @@ def check_eye():
 
 try:
     t1 = threading.Thread(target=FixAFK).start()
+    time.sleep(2)
     t3 = threading.Thread(target=check_eye).start()
     time.sleep(2)
     t2 = threading.Thread(target=Check_Shard).start()
