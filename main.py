@@ -21,30 +21,31 @@ def checkResearch():
     while keyboard.is_pressed('-') == False:
         a = GetpositionMouse()
         b = a
-        pyautogui.click(x=2190,y=761)
-        time.sleep(0.5)
-        count = 0
-        try:
-            for i in range(5):
-                while True:
-                    if pyautogui.pixelMatchesColor(x=2156+count,y=266,expectedRGBColor=(29,39,99)) or pyautogui.pixelMatchesColor(x=2156+count,y=266,expectedRGBColor=(33,138,19)):
-                        pyautogui.click(x=2156+count,y=266)
-                        time.sleep(0.5)
-                        if count == 236:
-                            if not pyautogui.pixelMatchesColor(x=2332,y=439,expectedRGBColor=(127,127,127)):
-                                pyautogui.click(2306,440)
+        if pyautogui.pixelMatchesColor(x=2157,y=786,expectedRGBColor=(33,138,19)) or pyautogui.pixelMatchesColor(x=2157,y=786,expectedRGBColor=(35,127,133)):
+            pyautogui.click(x=2190,y=761)
+            time.sleep(0.5)
+            count = 0
+            try:
+                for i in range(5):
+                    while True:
+                        if pyautogui.pixelMatchesColor(x=2156+count,y=266,expectedRGBColor=(29,39,99)) or pyautogui.pixelMatchesColor(x=2156+count,y=266,expectedRGBColor=(33,138,19)):
+                            pyautogui.click(x=2156+count,y=266)
+                            time.sleep(0.5)
+                            if count == 236:
+                                if not pyautogui.pixelMatchesColor(x=2332,y=439,expectedRGBColor=(127,127,127)):
+                                    pyautogui.click(2306,440)
+                                else:
+                                    pyautogui.click(2491,111)
                             else:
-                                pyautogui.click(2491,111)
-                        else:
-                            if not pyautogui.pixelMatchesColor(x=2332,y=437,expectedRGBColor=(127,127,127)):
-                                pyautogui.click(2305,429)
-                    count += 59
+                                if not pyautogui.pixelMatchesColor(x=2332,y=437,expectedRGBColor=(127,127,127)):
+                                    pyautogui.click(2305,429)
+                        count += 59
+                pyautogui.click(2491,111)
+            except:
+                pass
             pyautogui.click(2491,111)
-        except:
-            pass
-        pyautogui.click(2491,111)
-        pyautogui.moveTo(b)
-        time.sleep(60*10)
+            pyautogui.moveTo(b)
+            # time.sleep(60*10)
 
 
 def Check_Pos_Color():
