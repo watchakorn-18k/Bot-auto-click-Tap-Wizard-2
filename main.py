@@ -72,9 +72,14 @@ def check_eye():
         time.sleep(1800)
         
 
-t1 = threading.Thread(target=FixAFK).start()
-t3 = threading.Thread(target=check_eye).start()
-time.sleep(2)
-t2 = threading.Thread(target=Check_Shard).start()
-time.sleep(2)
-t2 = threading.Thread(target=checkResearch).start()
+try:
+    t1 = threading.Thread(target=FixAFK).start()
+    t3 = threading.Thread(target=check_eye).start()
+    time.sleep(2)
+    t2 = threading.Thread(target=Check_Shard).start()
+    time.sleep(2)
+    t2 = threading.Thread(target=checkResearch).start()
+except Exception as e:
+    error = e
+
+
