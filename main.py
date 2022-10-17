@@ -2,11 +2,12 @@
 bot game Tap Wizard 2 by wk18k
 """
 import flet
-from flet import Page, Text, colors, Theme, Row, Column,Container,AppBar,icons,Icon,ElevatedButton,KeyboardEvent,alignment,AnimatedSwitcher,Image,margin,Switch,ListView
+from flet import Page, Text, colors, Theme, Row, Column,Container,AppBar,icons,Icon,ElevatedButton,KeyboardEvent,alignment,AnimatedSwitcher,Image,margin,Switch,TextField
 import pyautogui as auto
 import threading
 import time
 import pygetwindow
+import os
 
 count_dead = 0
 count_enchant = 0
@@ -19,6 +20,9 @@ except:
     win = pygetwindow.getWindowsWithTitle('Lantern Active')[0]
     auto.click(1794, 876)
     auto.click(current_x,current_y)
+
+
+
 
 auto.FAILSAFE = False
 
@@ -64,6 +68,16 @@ def main(page: Page):
         page.update()
         time.sleep(3)
         change_text.content = Text("")
+    @update
+    def open_game():
+        path = os.getlogin()
+        try:
+            os.startfile(r'C:\Users\{0}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam\Tap Wizard 2.url'.format(path))
+        except:
+            alert2.value = r'ไม่พบตัวเกมอยู่ใน C:\Users\{0}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam\Tap Wizard 2.url'.format(path)
+            
+            
+
 
     @update
     def check_postion():
@@ -361,7 +375,8 @@ def main(page: Page):
                     toggle_afk,
                     toggle_eye_vision,
                     toggle_obelisk,
-                    ElevatedButton("ออกจาก Lantern",on_click= lambda x: exit_lantern())
+                    ElevatedButton("ออกจาก Lantern",on_click= lambda x: exit_lantern()),
+                    ElevatedButton("เปิดตัวเกม",on_click= lambda x: open_game())
                     
                 ]))
             ]
@@ -401,13 +416,15 @@ def main(page: Page):
     )
     )
     alert = Text("",size=25,text_align="center",color=colors.RED_ACCENT_400)
+    alert2 = Text("",size=20,text_align="center",color=colors.RED_ACCENT_200)
     page.add(Container(
             Row(
                 [
                     Column([
                         Text("บันทึก log"),
                     log,
-                    alert
+                    alert,
+                    alert2
                     ],horizontal_alignment="center")
                 ],alignment="center",vertical_alignment="center"),alignment=alignment.center
         ))
