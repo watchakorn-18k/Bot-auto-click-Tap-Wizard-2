@@ -153,7 +153,7 @@ def main(page: Page):
         """
         global Is_eye_of_vision
         Is_eye_of_vision = True if Is_eye_of_vision == False else False
-        toggle_afk.label = "ปิดโหมดตรวจจับ Eye Of Vision" if Is_eye_of_vision == False else "เปิดโหมดตรวจจับ Eye Of Vision"
+        toggle_eye_vision.label = "ปิดโหมดตรวจจับ Eye Of Vision" if Is_eye_of_vision == False else "เปิดโหมดตรวจจับ Eye Of Vision"
     @update
     def change_obelisk():
         """
@@ -161,7 +161,7 @@ def main(page: Page):
         """
         global change_obelisk
         change_obelisk = True if change_obelisk == False else False
-        toggle_afk.label = "ปิดโหมดตรวจจับ Obelisk Shard" if change_obelisk == False else "เปิดโหมดตรวจจับ Obelisk Shard"
+        toggle_obelisk.label = "ปิดโหมดตรวจจับ Obelisk Shard" if change_obelisk == False else "เปิดโหมดตรวจจับ Obelisk Shard"
     
     @update
     def check_eye_of_vision_ui():
