@@ -68,15 +68,18 @@ def main(page: Page):
         page.update()
         time.sleep(3)
         change_text.content = Text("")
+
     @update
     def open_game():
+        """
+        open game tap wizard 2
+        """
         path = os.getlogin()
         try:
             os.startfile(r'C:\Users\{0}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam\Tap Wizard 2.url'.format(path))
         except:
             alert2.value = r'ไม่พบตัวเกมอยู่ใน C:\Users\{0}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam\Tap Wizard 2.url'.format(path)
             
-    open_game()
 
 
     @update
@@ -154,14 +157,6 @@ def main(page: Page):
         global Is_eye_of_vision
         Is_eye_of_vision = True if Is_eye_of_vision == False else False
         toggle_eye_vision.label = "ปิดโหมดตรวจจับ Eye Of Vision" if Is_eye_of_vision == False else "เปิดโหมดตรวจจับ Eye Of Vision"
-    @update
-    def change_obelisk():
-        """
-        toggle on/off change_eye_vision()
-        """
-        global change_obelisk
-        change_obelisk = True if change_obelisk == False else False
-        toggle_obelisk.label = "ปิดโหมดตรวจจับ Obelisk Shard" if change_obelisk == False else "เปิดโหมดตรวจจับ Obelisk Shard"
     
     @update
     def check_eye_of_vision_ui():
@@ -212,6 +207,15 @@ def main(page: Page):
             time.sleep(0.1)
             auto.click(x_close,y_close)
             auto.moveTo(current_x,current_y)
+    
+    @update
+    def change_obelisk():
+        """
+        toggle on/off change_obelisk()
+        """
+        global Is_obelisk_shard
+        Is_obelisk_shard = True if Is_obelisk_shard == False else False
+        toggle_obelisk.label = "ปิดโหมดตรวจจับ Obelisk Shard" if Is_obelisk_shard == False else "เปิดโหมดตรวจจับ Obelisk Shard"
 
     @update
     def timer_grime():
