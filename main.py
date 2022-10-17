@@ -76,7 +76,7 @@ def main(page: Page):
         except:
             alert2.value = r'ไม่พบตัวเกมอยู่ใน C:\Users\{0}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam\Tap Wizard 2.url'.format(path)
             
-            
+    open_game()
 
 
     @update
