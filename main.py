@@ -192,6 +192,7 @@ def main(page: Page):
             current_x,current_y = check_postion_current()
             auto.click(x_first,y_first) if auto.pixel(x_first,y_first) == (35, 127, 133) else None
             amount_enchant.content = Text(count_enchant)
+            page.update()
             time.sleep(0.3)
             auto.click(x_two,y_two) if auto.pixel(x_two,y_two) == (6 , 6 , 8) else None
             time.sleep(0.1)
@@ -266,7 +267,10 @@ def main(page: Page):
                 toggle_obelisk.value = Is_obelisk_shard = False
                 toggle_afk.disabled,toggle_eye_vision.disabled, toggle_obelisk.disabled = True,True,True
                 
-
+    def exit_lantern():
+        current_x,current_y = check_postion_current()
+        auto.click(1794, 876)
+        auto.click(current_x,current_y)
         
     def on_keyboard(e: KeyboardEvent):
         """
@@ -357,7 +361,7 @@ def main(page: Page):
                     toggle_afk,
                     toggle_eye_vision,
                     toggle_obelisk,
-                    ElevatedButton("ออกจากโหมด Lantern active",on_click= lambda x:auto.click(1794, 876))
+                    ElevatedButton("ออกจาก Lantern",on_click= lambda x: exit_lantern())
                     
                 ]))
             ]
