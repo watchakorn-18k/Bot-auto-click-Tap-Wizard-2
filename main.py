@@ -356,7 +356,8 @@ def main(page: Page):
                     btn_grim,
                     toggle_afk,
                     toggle_eye_vision,
-                    toggle_obelisk
+                    toggle_obelisk,
+                    ElevatedButton("ออกจากโหมด Lantern active",on_click= lambda x:auto.click(1794, 876))
                     
                 ]))
             ]
