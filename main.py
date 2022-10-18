@@ -275,7 +275,7 @@ def main(page: Page):
         """
         current_x,current_y = check_postion_current()
         auto.click(1794, 876)
-        auto.click(current_x,current_y)
+        auto.moveTok(current_x,current_y)
 
     def open_totem_spirit():
         """

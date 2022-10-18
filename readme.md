@@ -73,7 +73,7 @@ zipp==3.9.0
 
 # Build
 ```
-pyinstaller main.py --noconsole --noconfirm --onefile -n windows-x64-v.0.3-bot-tap-wizard-2
+pyinstaller main.py --noconsole --noconfirm --onefile -n bot-tap-wizard-2 --icon icon.ico
 ```
 ```
 -n ชื่อไฟล์
