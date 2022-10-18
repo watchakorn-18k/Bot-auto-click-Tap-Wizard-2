@@ -6,20 +6,17 @@ from flet import Page, Text, colors, Theme, Row, Column,Container,AppBar,icons,I
 import pyautogui as auto
 import threading
 import time
+import math
+from datetime import datetime, date
 import pygetwindow
 import os
 
 count_dead = 0
 count_enchant = 0
 time_sec = 0
+state_totem = 0
 
-try:
-    win = pygetwindow.getWindowsWithTitle('Tap Wizard 2')[0]
-except:
-    current_x,current_y = auto.position()
-    win = pygetwindow.getWindowsWithTitle('Lantern Active')[0]
-    auto.click(1794, 876)
-    auto.click(current_x,current_y)
+
 
 
 
@@ -38,6 +35,7 @@ def main(page: Page):
         color=colors.WHITE,
         
         )
+    # auto.screenshot("",region=(0,0, 300, 400))
     
     def update(func):
         """
@@ -61,6 +59,7 @@ def main(page: Page):
         """
         chage size window game tap wizard 2
         """
+        win = pygetwindow.getWindowsWithTitle('Tap Wizard 2')[0] or pygetwindow.getWindowsWithTitle('Lantern Active')[0]
         win.size = (267,1039)
         win.moveTo(1662, 1)
         
@@ -176,7 +175,7 @@ def main(page: Page):
         x_icon,y_icon = (1807, 954)
         global count_dead
         while True:
-            if count_dead % 3 == 0 and count_dead != 0:
+            if count_dead % 3 == 0 and count_dead > 20:
                         for i in range(3):
                             auto.click(x_icon,y_icon) #icon
                             time.sleep(0.3)
@@ -195,8 +194,8 @@ def main(page: Page):
         x_two = 1804
         y_two = 261
         x_close,y_close = (1905, 102)
-        global count_enchant
-        if count_dead % 3 == 0 and count_dead != 0:
+        if count_dead % 3 == 0 and count_dead > 0:
+            global count_enchant
             count_enchant += 1
             current_x,current_y = check_postion_current()
             auto.click(x_first,y_first) if auto.pixel(x_first,y_first) == (35, 127, 133) else None
@@ -207,6 +206,28 @@ def main(page: Page):
             time.sleep(0.1)
             auto.click(x_close,y_close)
             auto.moveTo(current_x,current_y)
+
+    @update
+    def click_obelisk_shard():
+        """
+        Open obelisk shard for enchant
+        """
+        x_first = 1752
+        y_first = 995
+        x_two = 1804
+        y_two = 261
+        x_close,y_close = (1905, 102)
+        global count_enchant
+        count_enchant += 1
+        current_x,current_y = check_postion_current()
+        auto.click(x_first,y_first) if auto.pixel(x_first,y_first) == (35, 127, 133) else None
+        amount_enchant.content = Text(count_enchant)
+        page.update()
+        time.sleep(0.3)
+        auto.click(x_two,y_two) if auto.pixel(x_two,y_two) == (6 , 6 , 8) else None
+        time.sleep(0.1)
+        auto.click(x_close,y_close)
+        auto.moveTo(current_x,current_y)
     
     @update
     def change_obelisk():
@@ -248,8 +269,48 @@ def main(page: Page):
         # icon  (1807, 954) color 29, 39, 99
         # drink (1816, 140) color (6, 6, 8)
     
-    
+    def exit_lantern():
+        """
+        Remove Lantern Mode
+        """
+        current_x,current_y = check_postion_current()
+        auto.click(1794, 876)
+        auto.click(current_x,current_y)
 
+    def open_totem_spirit():
+        """
+        Open totem spirit in game
+        """
+        def run_open_totem_spirit():
+            """
+            Function build in 
+            """
+            x = 1714
+            y = 379
+            adder = 32
+            for i in range(6):
+                auto.click(x,y)
+                time.sleep(0.3)
+                auto.click(1794, 470) if i == 0 else auto.click(1797, 486)
+                x += adder
+            auto.click(1905, 373) # for exit
+
+        global state_totem
+        if state_totem == 0:
+            x,y = (1701, 389)
+            current_x,current_y = check_postion_current()
+            auto.click(1863, 995)
+            time.sleep(0.2)
+            auto.click(1863, 138)
+            time.sleep(0.2)
+            state_totem = 1
+            run_open_totem_spirit() if auto.pixel(x,y) == (35, 127, 133) else None
+            auto.click(1911, 283)
+            auto.moveTo(current_x,current_y)
+        else:
+            if float("%.2f" % math.modf(int(datetime.now().strftime("%H%M"))/100)[0]) == 0.01:
+                state_totem = 0
+    
 
     @update
     def run_bot():
@@ -260,35 +321,87 @@ def main(page: Page):
         global Is_eye_of_vision
         global Is_obelisk_shard
 
-        toggle_afk.value = Is_click_anti_afk = True
-        toggle_eye_vision.value = Is_eye_of_vision = True
-        toggle_obelisk.value = Is_obelisk_shard = True
-
         threading.Thread(target=timer_grime).start()
         threading.Thread(target=dead_speed_after_enchant).start()
         while True:
-            if win.width == 267 and win.height == 1039:
-                alert.value = None
-                toggle_afk.disabled,toggle_eye_vision.disabled, toggle_obelisk.disabled = False,False,False
-                toggle_afk.value = Is_click_anti_afk
-                toggle_eye_vision.value = Is_eye_of_vision
-                toggle_obelisk.value = Is_obelisk_shard
-                click_anti_afk() if auto.pixel(1913,620) == (119, 0, 112) and Is_click_anti_afk == True else None
-                check_eye_of_vision() if auto.pixel(1871,958) == (156, 36, 41) and Is_eye_of_vision == True else check_eye_of_vision_ui()
-                check_obelisk_shard() if auto.pixel(1752,995) == (35, 127, 133) and Is_obelisk_shard == True else None
-                check_postion()
-                time.sleep(0.7)
+            if pygetwindow.getWindowsWithTitle('Tap Wizard 2') != [] or pygetwindow.getWindowsWithTitle('Lantern Active') != []:
+                try:
+                    win = pygetwindow.getWindowsWithTitle('Tap Wizard 2')[0]
+                    alert.value = "ตรวจสอบพบเกม Tap Wizard 2 !"
+                    alert.color = colors.GREEN_ACCENT_400
+                    page.update()
+                    break
+                except:
+                    current_x,current_y = auto.position()
+                    try:
+                        win = pygetwindow.getWindowsWithTitle('Lantern Active')[0]
+                        auto.click(1794, 876)
+                        auto.click(current_x,current_y)
+                        alert.value = "ตรวจสอบพบเกม Tap Wizard 2 !"
+                        alert.color = colors.GREEN_ACCENT_400
+                        page.update()
+                    except IndexError:
+                        alert.value = "ตรวจสอบไม่พบเกมกรุณาเปิดเกม Tap Wizard 2 !"
+                        alert.color=colors.RED_ACCENT_200
+                        toggle_afk.value = Is_click_anti_afk = False
+                        toggle_eye_vision.value = Is_eye_of_vision = False
+                        toggle_obelisk.value = Is_obelisk_shard = False
+                        toggle_afk.disabled,toggle_eye_vision.disabled, toggle_obelisk.disabled = True,True,True
+                        change_size_btn.disabled = True
+                        page.update()
+                        
             else:
-                alert.value = "ขนาดจอเกมไม่ถูกต้อง กรุณากดปุ่ม เปลี่ยนขนาดเกม"
+                alert.value = "ตรวจสอบไม่พบเกมกรุณาเปิดเกม Tap Wizard 2 !"
+                alert.color=colors.RED_ACCENT_200
                 toggle_afk.value = Is_click_anti_afk = False
                 toggle_eye_vision.value = Is_eye_of_vision = False
                 toggle_obelisk.value = Is_obelisk_shard = False
                 toggle_afk.disabled,toggle_eye_vision.disabled, toggle_obelisk.disabled = True,True,True
-                
-    def exit_lantern():
-        current_x,current_y = check_postion_current()
-        auto.click(1794, 876)
-        auto.click(current_x,current_y)
+                change_size_btn.disabled = True
+                page.update()
+
+        toggle_afk.value = Is_click_anti_afk = True
+        toggle_eye_vision.value = Is_eye_of_vision = True
+        toggle_obelisk.value = Is_obelisk_shard = True
+        while True:
+            try:
+                if win.width == 267 and win.height == 1039:
+                    frac,full = math.modf(int(datetime.now().strftime("%H%M"))/100)
+                    alert.value = None
+                    toggle_afk.disabled,toggle_eye_vision.disabled, toggle_obelisk.disabled = False,False,False
+                    toggle_afk.value = Is_click_anti_afk
+                    toggle_eye_vision.value = Is_eye_of_vision
+                    toggle_obelisk.value = Is_obelisk_shard
+                    click_anti_afk() if auto.pixel(1913,620) == (119, 0, 112) and Is_click_anti_afk == True else None
+                    check_eye_of_vision() if auto.pixel(1871,958) == (156, 36, 41) and Is_eye_of_vision == True else check_eye_of_vision_ui()
+                    check_obelisk_shard() if auto.pixel(1752,995) == (35, 127, 133) and Is_obelisk_shard == True else None
+                    check_postion()
+                    open_totem_spirit() if frac == 0.0 else None
+                    
+                    
+                    time.sleep(1)
+                elif win.width != 267 and win.height != 1039:
+                    alert.value = "ขนาดจอเกมไม่ถูกต้อง กรุณากดปุ่ม เปลี่ยนขนาดเกม"
+                    alert.color=colors.RED_ACCENT_200
+                    toggle_afk.value = Is_click_anti_afk = False
+                    toggle_eye_vision.value = Is_eye_of_vision = False
+                    toggle_obelisk.value = Is_obelisk_shard = False
+                    
+                else:
+                    toggle_afk.value = Is_click_anti_afk = False
+                    toggle_eye_vision.value = Is_eye_of_vision = False
+                    toggle_obelisk.value = Is_obelisk_shard = False
+                    toggle_afk.disabled,toggle_eye_vision.disabled, toggle_obelisk.disabled = True,True,True
+            except pygetwindow.PyGetWindowException:
+                alert.value = "ตรวจสอบไม่พบเกมกรุณาเปิดเกม Tap Wizard 2 !"
+                alert.color=colors.RED_ACCENT_200
+                toggle_afk.value = Is_click_anti_afk = False
+                toggle_eye_vision.value = Is_eye_of_vision = False
+                toggle_obelisk.value = Is_obelisk_shard = False
+                toggle_afk.disabled,toggle_eye_vision.disabled, toggle_obelisk.disabled = True,True,True
+                change_size_btn.disabled = True
+                page.update()
+         
         
     def on_keyboard(e: KeyboardEvent):
         """
@@ -297,7 +410,7 @@ def main(page: Page):
         import pyperclip
         print(f"Key: {e.key}, Shift: {e.shift}, Control: {e.ctrl}, Alt: {e.alt}, Meta: {e.meta}")
         check_postion() if e.key == "P" and e.ctrl == True else None
-        check_obelisk_shard() if e.key == "T" and e.ctrl == True else None
+        open_totem_spirit() if e.key == "T" and e.ctrl == True else None
         pyperclip.copy(f"{check_postion_current()}") if e.key == "C" and e.ctrl == True else None
         
     
@@ -348,8 +461,11 @@ def main(page: Page):
     toggle_obelisk = Switch(label="ปิดโหมดตรวจจับ Obelisk Shard",on_change=lambda x:change_obelisk())
     
     log = Text("",text_align="center")
-
+    btn_open_totem = ElevatedButton("เปิดใช้งาน Totem Spirit",on_click= lambda x: open_totem_spirit())
+    btn_enchant = ElevatedButton("Enchant ตัวละคร",on_click= lambda x: click_obelisk_shard())
     page.auto_scroll = True
+    alert = Text("",size=25,text_align="center",color=colors.RED_ACCENT_400)
+    alert2 = Text("",size=20,text_align="center",color=colors.RED_ACCENT_200)
     page.add(Container(
             Row(
                 [
@@ -380,11 +496,13 @@ def main(page: Page):
                     toggle_eye_vision,
                     toggle_obelisk,
                     ElevatedButton("ออกจาก Lantern",on_click= lambda x: exit_lantern()),
+                    btn_open_totem,
+                    btn_enchant,
                     ElevatedButton("เปิดตัวเกม",on_click= lambda x: open_game())
                     
                 ]))
             ]
-            ),margin=50
+            ),margin=margin.only(left=50)
             
         ),
         Container(
@@ -403,7 +521,18 @@ def main(page: Page):
                 amount_enchant,
                 Text("ครั้ง"),
                     ],animate_opacity=300
-                )
+                ),
+                Container(
+                Row(
+                    [
+                        Column([
+                            Text("บันทึก log",text_align="center"),
+                        log,
+                        alert,
+                        alert2
+                        ],horizontal_alignment="center")
+                    ],alignment="center",vertical_alignment="center"),alignment=alignment.center
+            )
                 ]),margin=margin.only(top=20)
         ),
         Container( 
@@ -419,19 +548,7 @@ def main(page: Page):
         alignment="spaceBetween"
     )
     )
-    alert = Text("",size=25,text_align="center",color=colors.RED_ACCENT_400)
-    alert2 = Text("",size=20,text_align="center",color=colors.RED_ACCENT_200)
-    page.add(Container(
-            Row(
-                [
-                    Column([
-                        Text("บันทึก log"),
-                    log,
-                    alert,
-                    alert2
-                    ],horizontal_alignment="center")
-                ],alignment="center",vertical_alignment="center"),alignment=alignment.center
-        ))
+    
     
     page.update()
 
