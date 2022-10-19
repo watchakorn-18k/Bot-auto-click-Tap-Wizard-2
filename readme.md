@@ -8,10 +8,13 @@
 - โหมดป้องกันการ afk
 - ตรวจจับ eye of vision
 - ตรวจจับ obelisk shard
-- การเปิดใช้งาน Totem Spirit
+- การเปิดใช้งาน Totem Spirit ทุกๆ 1 ชั่วโมง
 - ปุ่ม Enchant เพียงแค่คลิกปุ่มเดียว
 - ปุ่มออกจากโหมด Lantern
 - ปุ่มเปิดเกม (ท่านต้องติดตั้งลงในค่าเริ่มต้นของ steam)
+- awaken อัตโนมัติ
+- สุ่ม spell อัตโนมัติหลัง awaken เสร็จ
+- เลือกของใน Runic Table อัตโนมัติโดยจะเลือก Jagged Totem และ Gem และ Magic die ตามลำดับ
 
 # ความต้องการ
 - Era 4 
