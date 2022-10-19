@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "Bot-auto-click-Tap-Wizard-2"
+version = "0.1.0"
+description = ""
+authors = ["watchakorn-18k <porton2559@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+flet = "^0.1.62"
+PyAutoGUI = "^0.9.53"
+Pillow = "^9.2.0"
+PyGetWindow = "^0.0.9"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+start = "bot_auto_click_tap_wizard_2.main:start"

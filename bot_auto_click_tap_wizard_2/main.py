@@ -665,7 +665,9 @@ def main(page: Page):
     t.start()
 
 if __name__ == '__main__':
-    
+    flet.app(target=main)
+
+def start():
     flet.app(target=main)
     
     
