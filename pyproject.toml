@@ -10,9 +10,10 @@ flet = "^0.1.62"
 PyAutoGUI = "^0.9.53"
 Pillow = "^9.2.0"
 PyGetWindow = "^0.0.9"
+pip = "^22.3"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
