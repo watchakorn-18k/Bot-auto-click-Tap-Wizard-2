@@ -16,6 +16,7 @@ count_dead = 0
 count_enchant = 0
 time_sec = 0
 state_totem = 0
+state_runic = 0
 
 
 
@@ -276,7 +277,7 @@ def main(page: Page):
         """
         current_x,current_y = check_postion_current()
         auto.click(1794, 876)
-        auto.moveTok(current_x,current_y)
+        auto.moveTo(current_x,current_y)
 
     def open_totem_spirit():
         """
@@ -381,38 +382,40 @@ def main(page: Page):
         auto.click(1902, 101)
         auto.moveTo(current_x,current_y)
     
+    
     def choice_runic():
         """"
         auto choice runic
         """
+        global state_runic
         current_x,current_y = check_postion_current()
         auto.click(1828, 994) if auto.pixel(1895, 265) != (19, 23, 58) else None
         def loop_choice_runic(x:int,y:int,amount:int):
             for i in range(amount):
                 auto.click(x,y)
         time.sleep(0.2)
+        if state_runic == 0:
+            if auto.pixel(1852, 247) == (44, 49, 60):
+                """
+                jagged Totem
+                """
+                auto.click(1852, 247)
+                loop_choice_runic(1799, 317,1)
 
-        if auto.pixel(1852, 247) == (44, 49, 60):
-            """
-            jagged Totem
-            """
-            auto.click(1852, 247)
-            loop_choice_runic(1799, 317,1)
-
-        elif auto.pixel(1852, 246) == (141, 0, 241):
-            """
-            Gems
-            """
-            auto.click(1852, 246)
-            loop_choice_runic(1799, 317,6)
-            
-        elif auto.pixel(1837, 248) == (255, 253, 245):
-            """
-            Magic Die
-            """
-            auto.click(1837, 248)
-            loop_choice_runic(1799, 317,1)
-            
+            elif auto.pixel(1852, 246) == (141, 0, 241):
+                """
+                Gems
+                """
+                auto.click(1852, 246)
+                loop_choice_runic(1799, 317,6)
+                
+            elif auto.pixel(1837, 248) == (255, 253, 245):
+                """
+                Magic Die
+                """
+                auto.click(1837, 248)
+                loop_choice_runic(1799, 317,1)
+        state_runic = 0 if float("%.2f" % math.modf(int(datetime.now().strftime("%H%M"))/100)[0]) == 0.03 else 1
         auto.click(1686, 464)
         auto.moveTo(current_x,current_y)
 
@@ -481,8 +484,9 @@ def main(page: Page):
                     check_obelisk_shard() if auto.pixel(1752,995) == (35, 127, 133) and Is_obelisk_shard == True else None
                     awakening() if auto.pixel(1838, 951) == (255, 161, 161) or auto.pixel(1730, 960) == (237, 247, 252) else None
                     choice_spell() if auto.pixel(1742, 952) == (255, 161, 161)  else None
-                    open_totem_spirit() if frac == 0.0 else None
-                    choice_runic() if frac == 0.0 else None
+                    open_totem_spirit() if frac == 0.0 else None 
+                    choice_runic() if float("%.2f" % math.modf(int(datetime.now().strftime("%H%M"))/100)[0]) == 0.02 else None 
+                    exit_lantern() if pygetwindow.getWindowsWithTitle('Lantern Active') != [] else None
                     check_postion()
                     
                     

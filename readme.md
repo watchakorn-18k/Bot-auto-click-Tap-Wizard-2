@@ -46,12 +46,12 @@ pyinstaller main.py --noconsole --noconfirm --onefile -n bot-tap-wizard-2 --icon
 # Poetry Command
 ```
 poetry run start
-poetry run python flet main.py -d
 ```
 
 # Flet Hot-Reload
 ```
-flet main.py -d
+poetry shell
+flet bot_auto_click_tap_wizard_2/main.py -d
 ```
 
 # Contribute
