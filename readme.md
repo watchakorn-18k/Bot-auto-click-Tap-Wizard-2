@@ -32,12 +32,17 @@
 ```cmd
 git clone https://github.com/watchakorn-18k/Bot-auto-click-Tap-Wizard-2
 cd Bot-auto-click-Tap-Wizard-2
+poetry config virtualenvs.path click
+poetry shell
 poetry install
 ```
 
-# Build
+# Build 
+ใช้ dependency นอกคือ pyinstaller
 ```
-pyinstaller main.py --noconsole --noconfirm --onefile -n bot-tap-wizard-2 --icon icon.png
+poetry shell
+pip install Pyinstaller
+pyinstaller bot_auto_click_tap_wizard_2/main.py --noconsole --noconfirm --onefile -n bot-tap-wizard-2 --icon bot_auto_click_tap_wizard_2/icon.png
 ```
 ```
 -n ชื่อไฟล์
