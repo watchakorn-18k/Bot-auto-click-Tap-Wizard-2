@@ -1,6 +1,6 @@
 # Bot-auto-click-Tap-Wizard-2
 
-<p align="center"><img src="https://media.discordapp.net/attachments/585069498986397707/1031894337761595442/unknown.png?width=996&height=535"></p>
+<p align="center"><img src="https://media.discordapp.net/attachments/581018943041306641/1032493156790452275/unknown.png"></p>
 <p align="center"><img src="https://media.discordapp.net/attachments/585069498986397707/1031478804507533322/Skin6B_2.png"></p>
 
 # ฟีเจอร์

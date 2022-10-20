@@ -4,3 +4,4 @@
 /*.spec
 /build
 poetry.lock
+command_for_build.md
