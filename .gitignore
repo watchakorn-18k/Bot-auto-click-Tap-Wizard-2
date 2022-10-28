@@ -6,3 +6,5 @@
 poetry.lock
 command_for_build.md
 build.cmd
+
+*.pyc

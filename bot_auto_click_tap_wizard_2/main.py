@@ -366,40 +366,84 @@ def main(page: Page):
         auto click for awaken character
         """
         current_x, current_y = check_postion_current()
-        auto.click(1826, 955) if auto.pixel(1838, 951) == (255, 161, 161) else None
-        time.sleep(0.1)
-        auto.click(1794, 263) if auto.pixel(1838, 951) == (255, 161, 161) else None
-        time.sleep(3)
-        auto.click(1775, 230) if auto.pixel(1725, 167) == (239, 244, 218) else None
-        auto.click(1732, 962)
-        auto.click(1725, 167) if auto.pixel(1735, 252) != (15, 18, 45) else None
-        list_wizard = []
-        x_wizard, y_wizard = (1697, 287)
-        range_wizard = 35
-        for i in range(7):
-            list_wizard.append((x_wizard, y_wizard))
-            x_wizard += range_wizard
-        auto.click(random.choice(list_wizard))
+        global wizard
 
-        time.sleep(0.1)
-        auto.click(1762, 164)
-        list_trait = []
-        x_trait, y_trait = (1760, 271)
-        range_trait = 20
-        for i in range(3):
-            list_trait.append((x_trait, y_trait))
-            x_trait += range_trait
-        auto.click(random.choice(list_trait))
-        auto.click(1794, 205)
-        auto.click(1857, 340)
-        auto.click(1788, 167)
-        time.sleep(0.2)
-        auto.click(1788, 167)
-        time.sleep(0.2)
-        auto.click(1793, 180)
-        time.sleep(0.2)
-        auto.click(1793, 180)
-        auto.click(1895, 340)
+        def check_awaken_btn():
+            auto.click(1826, 955) if auto.pixel(1838, 951) == (255, 161, 161) else None
+            time.sleep(0.1)
+            auto.click(1800, 275) if auto.pixel(1800, 275) == (3, 147, 3) else None
+            time.sleep(3)
+        
+        def check_btn_human_white(): 
+            auto.click(1775, 230)
+            auto.click(1731,959) 
+
+        def check_charactor_and_select():
+            global wizard
+            auto.click(1725, 167) if auto.pixel(1735, 252) != (15, 18, 45) else None
+            list_wizard = []
+            x_wizard, y_wizard = (1697, 287)
+            range_wizard = 35
+            for i in range(7):
+                list_wizard.append((x_wizard, y_wizard))
+                x_wizard += range_wizard
+            random_wizard = random.choice(list_wizard)
+            auto.click(random_wizard)
+            wizard = list_wizard.index(random_wizard)
+            print("Postion Wizard: ",wizard)
+        
+        def check_trait():
+            auto.click(1762, 164)
+            list_trait = []
+            x_trait, y_trait = (1760, 271)
+            range_trait = 20
+            for i in range(3):
+                list_trait.append((x_trait, y_trait))
+                x_trait += range_trait
+            auto.click(random.choice(list_trait))
+        
+        def check_fate():
+            postion_fate = {"Perk_Fairy":(1864, 300)}
+            auto.click(1794, 205)
+            auto.click(postion_fate["Perk_Fairy"])
+
+        def confirm():
+            #btn rember
+            auto.click(1788, 167)
+            time.sleep(0.2)
+            #btn rember
+            auto.click(1788, 167)
+            time.sleep(0.2)
+            #btn confirm
+            auto.click(1796, 220)
+            time.sleep(0.2)
+            #btn confirm
+            auto.click(1796, 220)
+            #exit
+            auto.click(1895, 340)
+
+        def check_procress():
+
+            # start check charactor
+            check_charactor_and_select() if auto.pixel(1771, 175) != (29, 39, 99) else None
+            #end check charactor
+
+            time.sleep(0.1)
+            # start check trait
+            check_trait() if auto.pixel(1776, 220) != (29, 39, 99) else None
+            #end check trait
+            check_fate()
+            time.sleep(0.2)
+            confirm()
+
+
+        check_awaken_btn() if auto.pixel(1838, 951) == (255, 161, 161) else None
+        # end check click first
+
+        # start check btn human white
+        check_btn_human_white() if auto.pixel(1731,959) == (237, 247, 252) else None
+        # end check btn human white
+        check_procress() if auto.pixel(x=1801, y=222) != (2, 159, 3) else auto.click(x=1801, y=222)
         auto.moveTo(current_x, current_y)
 
     def choice_spell():
@@ -407,26 +451,52 @@ def main(page: Page):
         auto choice spell
         """
         current_x, current_y = check_postion_current()
-        auto.click(1727, 955) if auto.pixel(1707, 116) != (15, 18, 45) else None
-        list_spells = []
-        x_spell, y_spell = (1711, 224)
-        range_spell = 35
-        for i in range(6):
-            list_spells.append((x_spell, y_spell))
-            x_spell += range_spell
-        list_spells = random.sample(list_spells, 4)
+        
+        
+        def method_select_spell(wizard_index):
+            global wizard
+            list_spells = []
+            if wizard == 4:
+                list_spells = []
+                x_spell, y_spell = (1750, 224)
+                range_spell = 30
+                for i in range(4):
+                    list_spells.append((x_spell, y_spell))
+                    x_spell += range_spell
 
-        list_space = []
-        x_space, y_space = (1739, 152)
-        range_space = 35
-        for s in range(4):
-            list_space.append((x_space, y_space))
-            x_space += range_space
+                x_spell, y_spell = (1750, 260)
+                range_spell = 30
+                for f in range(4):
+                    list_spells.append((x_spell, y_spell))
+                    x_spell += range_spell
+
+                list_spells = random.sample(list_spells, 4)
+            else:
+                x_spell, y_spell = (1711, 224)
+                range_spell = 35
+                for i in range(6):
+                    list_spells.append((x_spell, y_spell))
+                    x_spell += range_spell
+                list_spells = random.sample(list_spells, 4)
+            return list_spells
+        
+        def check_space():
+            list_space = []
+            x_space, y_space = (1739, 152)
+            range_space = 35
+            for s in range(4):
+                list_space.append((x_space, y_space))
+                x_space += range_space
+            return list_space
+
+        auto.click(1727, 955) if auto.pixel(1707, 116) != (15, 18, 45) else None
+        global wizard
+        list_spells = method_select_spell(wizard)
+        list_space = check_space()
 
         for f in range(4):
             auto.click(list_spells[f])
-            time.sleep(0.1)
-            auto.dragTo(list_space[f])
+            auto.dragTo(list_space[f], button='left', duration=0.15)
         auto.click(1902, 101)
         auto.moveTo(current_x, current_y)
 
@@ -516,11 +586,9 @@ def main(page: Page):
                 127,
                 133,
             ) and Is_obelisk_shard == True else None
-            awakening() if auto.pixel(1838, 951) == (
-                255,
-                161,
-                161,
-            ) or auto.pixel(1730, 960) == (237, 247, 252) else None 
+            awakening() if auto.pixel(1838, 951) == (255, 161, 161,) or auto.pixel(
+                1730, 960
+            ) == (237, 247, 252) else None
             check_postion()
 
     @update
@@ -588,12 +656,17 @@ def main(page: Page):
         while True:
             try:
                 if win.width == 267 and win.height == 1039:
+                    
                     frac, full = math.modf(int(datetime.now().strftime("%H%M")) / 100)
                     log_display.controls.pop(-1) if len(
                         log_display.controls
                     ) > 2 else None
-                    threading.Thread(target=sub_run_bot).start() if Start_thead_sub_run_bot == False else None
+                    threading.Thread(
+                        target=sub_run_bot
+                    ).start() if Start_thead_sub_run_bot == False else None
+
                     choice_spell() if auto.pixel(1742, 952) == (255, 161, 161) else None
+                    
                     open_totem_spirit() if frac == 0.0 else None
                     choice_runic() if float(
                         "%.2f"
@@ -602,14 +675,14 @@ def main(page: Page):
                     exit_lantern() if pygetwindow.getWindowsWithTitle(
                         "Lantern Active"
                     ) != [] else None
-                    
+
                 elif win.width != 267 and win.height != 1039:
                     log.value = "ขนาดจอเกมไม่ถูกต้อง กรุณากดปุ่ม เปลี่ยนขนาดเกม"
                     log.color = colors.RED_ACCENT_200
                     toggle_afk.value = Is_click_anti_afk = False
                     toggle_eye_vision.value = Is_eye_of_vision = False
                     toggle_obelisk.value = Is_obelisk_shard = False
-
+                    change_size_btn.disabled = False
                     page.update()
                 else:
                     toggle_afk.value = Is_click_anti_afk = False
@@ -645,7 +718,8 @@ def main(page: Page):
             f"Key: {e.key}, Shift: {e.shift}, Control: {e.ctrl}, Alt: {e.alt}, Meta: {e.meta}"
         )
         check_postion() if e.key == "P" and e.ctrl == True else None
-        choice_runic() if e.key == "T" and e.ctrl == True else None
+        awakening() if e.key == "A" and e.ctrl == True else None
+        choice_spell() if e.key == "T" and e.ctrl == True else None
         pyperclip.copy(
             f"{check_postion_current()}"
         ) if e.key == "C" and e.ctrl == True else None
@@ -901,9 +975,13 @@ def main(page: Page):
     t.start()
 
 
-if __name__ == "__main__":
+def start():
     flet.app(target=main)
 
 
-def start():
+if __name__ == "__main__":
+    import cProfile
+
+    # cProfile.run("start()")
+
     flet.app(target=main)
